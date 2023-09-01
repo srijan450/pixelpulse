@@ -286,7 +286,7 @@ const _hooksclientcontext = __webpack_require__(9569);
 const _usereducerwithdevtools = __webpack_require__(7951);
 const _errorboundary = __webpack_require__(1232);
 const _createinitialrouterstate = __webpack_require__(1684);
-const _isbot = __webpack_require__(2252);
+const _isbot = __webpack_require__(8735);
 const _addbasepath = __webpack_require__(4578);
 const _approuterannouncer = __webpack_require__(3049);
 const _redirectboundary = __webpack_require__(1442);
@@ -306,7 +306,12 @@ function urlToUrlWithoutFlightMarker(url) {
     const urlWithoutFlightParameters = new URL(url, location.origin);
     urlWithoutFlightParameters.searchParams.delete(_approuterheaders.NEXT_RSC_UNION_QUERY);
     if (true) {
-        if (false) {}
+        if ( true && urlWithoutFlightParameters.pathname.endsWith(".txt")) {
+            const { pathname } = urlWithoutFlightParameters;
+            const length = pathname.endsWith("/index.txt") ? 10 : 4;
+            // Slice off `/index.txt` or `.txt` from the end of the pathname
+            urlWithoutFlightParameters.pathname = pathname.slice(0, -length);
+        }
     }
     return urlWithoutFlightParameters;
 }
@@ -2584,7 +2589,13 @@ async function fetchServerResponse(url, flightRouterState, nextUrl, currentBuild
     try {
         let fetchUrl = new URL(url);
         if (true) {
-            if (false) {}
+            if (true) {
+                if (fetchUrl.pathname.endsWith("/")) {
+                    fetchUrl.pathname += "index.txt";
+                } else {
+                    fetchUrl.pathname += ".txt";
+                }
+            }
         }
         // Add unique cache query to avoid caching conflicts on CDN which don't respect to Vary header
         fetchUrl.searchParams.set(_approuterheaders.NEXT_RSC_UNION_QUERY, uniqueCacheQuery);
@@ -2598,7 +2609,11 @@ async function fetchServerResponse(url, flightRouterState, nextUrl, currentBuild
         const contentType = res.headers.get("content-type") || "";
         let isFlightResponse = contentType === _approuterheaders.RSC_CONTENT_TYPE_HEADER;
         if (true) {
-            if (false) {}
+            if (true) {
+                if (!isFlightResponse) {
+                    isFlightResponse = contentType.startsWith("text/plain");
+                }
+            }
         }
         // If fetch returns something different than flight response handle it like a mpa navigation
         // If the fetch was not 200, we also handle it like a mpa navigation
