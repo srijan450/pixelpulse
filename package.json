@@ -1,7 +1,8 @@
 {
-  "name": "client",
+  "name": "pixelpulse",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://srijan450.github.io/pixelpulse/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
